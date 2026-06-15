@@ -26,6 +26,12 @@ AuraWealth is a clean, simple, and beautiful expense tracker built primarily for
 
 ---
 
+## 🚀 How to Run Locally
+1. Clone the repository: `git clone https://github.com/rehan-1002/Expense-Trackerr.git`
+2. Open `index.html` in your browser (or use Live Server in VS Code).
+
+---
+
 ## 📂 Project Structure
 
 ```text
