@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraWealth - Elegant Expense Tracker & Insights</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  
+  <!-- Ambient background glow spots -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header>
+      <div class="brand-section">
+        <h1><i class="fa-solid fa-feather-pointed"></i> AuraWealth</h1>
+        <p>Your beautiful personal finance & spending insights</p>
+      </div>
+      <div class="date-badge">
+        <i class="fa-regular fa-calendar-check"></i>
+        <span id="currentDateDisplay">June 2026</span>
+      </div>
+    </header>
+
+    <!-- Top Dashboard Grid -->
+    <section class="dashboard-grid">
+      
+      <!-- Balance Card -->
+      <div class="glass-card card-balance">
+        <div class="card-title">
+          <span>Net Balance</span>
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+        <div class="balance-amount" id="netBalanceAmount">₹0.00</div>
+        <div class="balance-stats">
+          <div class="stat-item">
+            <span>Received (Credit)</span>
+            <div class="stat-amount credit" id="totalIncomeAmount">+₹0.00</div>
+          </div>
+          <div class="stat-item">
+            <span>Spent (Debit)</span>
+            <div class="stat-amount debit" id="totalExpenseAmount">-₹0.00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Budget Tracking Card -->
+      <div class="glass-card card-budget">
+        <div class="card-title">
+          <span>Monthly Budget</span>
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <div class="budget-status-row">
+          <div class="budget-amount" id="budgetPercentage">0%</div>
+          <div class="budget-limit" id="budgetSpentVsLimit">₹0.00 spent of ₹0.00</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="budgetProgressBar"></div>
+        </div>
+        <div class="budget-footer">
+          <span id="budgetStatusText">Setting budget helps control spending</span>
+          <button class="edit-budget-btn" id="openBudgetModalBtn">Adjust Budget</button>
+        </div>
+      </div>
+
+      <!-- Analytics/Insights Card -->
+      <div class="glass-card card-insights">
+        <div class="card-title">
+          <span>Top Expenses</span>
+          <i class="fa-solid fa-fire-flame-curved"></i>
+        </div>
+        <div id="insightsContainer" class="insights-content">
+          <div class="no-insights" id="noInsightsText">
+            No expenses recorded yet to show analytics.
+          </div>
+          <!-- Dynamically generated top spending bars go here -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Core Interactive Workspace -->
+    <main class="workspace-grid">
+      
+      <!-- Left: Create Transaction Form -->
+      <section class="glass-card">
+        <div class="card-title" style="margin-bottom: 1.5rem;">
+          <span>New Transaction</span>
+          <i class="fa-solid fa-circle-plus"></i>
+        </div>
+
+        <form id="transactionForm" autocomplete="off">
+          
+          <!-- Credit/Debit Selector -->
+          <div class="transaction-type-toggle">
+            <button type="button" class="type-toggle-btn active credit" id="typeCreditBtn" data-type="credit">
+              <i class="fa-solid fa-arrow-trend-up"></i> Received
+            </button>
+            <button type="button" class="type-toggle-btn debit" id="typeDebitBtn" data-type="debit">
+              <i class="fa-solid fa-arrow-trend-down"></i> Spent
+            </button>
+          </div>
+
+          <!-- Amount -->
+          <div class="form-group">
+            <label for="amountInput">Amount (₹)</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-indian-rupee-sign input-icon"></i>
+              <input type="number" id="amountInput" step="0.01" min="0.01" placeholder="0.00" required>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="form-group">
+            <label for="categoryInput">Category</label>
+            <div class="input-wrapper select-wrapper">
+              <i class="fa-solid fa-shapes input-icon"></i>
+              <select id="categoryInput" required>
+                <option value="" disabled selected>Select Category</option>
+                <!-- Filled dynamically, but default categories: -->
+                <option value="salary">Salary / Earnings</option>
+                <option value="freelance">Freelance / Side Biz</option>
+                <option value="food">Food & Dining</option>
+                <option value="rent">Rent / Housing</option>
+                <option value="shopping">Shopping</option>
+                <option value="utilities">Bills & Utilities</option>
+                <option value="entertainment">Entertainment & Travel</option>
+                <option value="others">Others / Misc</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div class="form-group">
+            <label for="dateInput">Date</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-calendar input-icon"></i>
+              <input type="date" id="dateInput" required>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label for="noteInput">Notes / Description</label>
+            <textarea id="noteInput" placeholder="Add a memo or note... (e.g. Weekly grocery check)"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-receipt"></i> Record Transaction
+          </button>
+
+        </form>
+      </section>
+
+      <!-- Right: History Feed -->
+      <section class="glass-card">
+        <div class="history-header">
+          
+          <div class="history-title-row">
+            <div class="card-title" style="margin-bottom: 0;">
+              <span>Transaction Log</span>
+              <i class="fa-solid fa-list-ul"></i>
+            </div>
+            
+            <button class="btn-export" id="exportCsvBtn">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+          </div>
+
+          <!-- Action Filters/Search Grid -->
+          <div class="action-row">
+            
+            <div class="input-wrapper search-box">
+              <i class="fa-solid fa-magnifying-glass input-icon"></i>
+              <input type="text" id="searchInput" placeholder="Search by note or category..." style="padding-left: 2.5rem;">
+            </div>
+
+            <div class="filter-tabs">
+              <button class="filter-tab-btn active" data-filter="all">All</button>
+              <button class="filter-tab-btn" data-filter="credit">Received</button>
+              <button class="filter-tab-btn" data-filter="debit">Spent</button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Scrollable Transaction container -->
+        <div class="transaction-list-container" id="transactionListContainer">
+          <!-- Transctions go here dynamically -->
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Budget Config Modal Overlay -->
+  <div class="modal-overlay" id="budgetModalOverlay">
+    <div class="modal">
+      <div class="modal-header">Adjust Monthly Budget</div>
+      <form id="budgetConfigForm">
+        <div class="form-group">
+          <label for="monthlyBudgetLimitInput">Monthly Limit (₹)</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-wallet input-icon"></i>
+            <input type="number" id="monthlyBudgetLimitInput" min="0" placeholder="Enter limit (e.g. 1500)" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="closeBudgetModalBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Budget</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toasts overlay -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main logic JS script -->
+  <script src="app.js"></script>
+</body>
+</html>
