@@ -3,7 +3,7 @@
 // --- Constants & State ---
 let state = {
   transactions: JSON.parse(localStorage.getItem('aura_transactions')) || [],
-  budgetLimit: parseFloat(localStorage.getItem('aura_budget_limit')) || 30000.00,
+  budgetLimit: parseFloat(localStorage.getItem('aura_budget_limit')) || 8000.00,
   currentType: 'credit', // Default transaction form type selector
   filters: {
     search: '',
@@ -12,13 +12,14 @@ let state = {
 };
 
 const CATEGORIES = {
-  salary: { label: 'Salary / Earnings', icon: 'fa-money-bill-wave' },
-  freelance: { label: 'Freelance / Side Biz', icon: 'fa-laptop-code' },
-  food: { label: 'Food & Dining', icon: 'fa-utensils' },
-  rent: { label: 'Rent / Housing', icon: 'fa-house' },
-  shopping: { label: 'Shopping', icon: 'fa-bag-shopping' },
-  utilities: { label: 'Bills & Utilities', icon: 'fa-bolt' },
-  entertainment: { label: 'Entertainment & Travel', icon: 'fa-clapperboard' },
+  pocket_money: { label: 'Pocket Money / Allowance', icon: 'fa-hand-holding-dollar' },
+  part_time: { label: 'Part-time / Internship', icon: 'fa-briefcase' },
+  scholarship: { label: 'Scholarship / Grant', icon: 'fa-graduation-cap' },
+  food: { label: 'Food & Cafeteria', icon: 'fa-utensils' },
+  books: { label: 'Books & Study Materials', icon: 'fa-book-open' },
+  rent: { label: 'Hostel / Room Rent', icon: 'fa-house-user' },
+  transport: { label: 'Transit & Travel', icon: 'fa-bus' },
+  entertainment: { label: 'Outings & Fun', icon: 'fa-gamepad' },
   others: { label: 'Others / Misc', icon: 'fa-asterisk' }
 };
 
@@ -179,12 +180,12 @@ function renderDashboardMetrics() {
   if (budgetPercentageValue >= 85) {
     DOM.budgetProgressBar.classList.add('warning');
     DOM.budgetStatusText.textContent = budgetPercentageValue >= 100 
-      ? '🚨 Budget limit has been exceeded!' 
-      : '⚠️ Budget limit warning: 85%+ reached!';
+      ? '🚨 Campus budget exceeded! Avoid unnecessary outings!' 
+      : '⚠️ Watch out! Campus savings running low (85%+ spent)!';
     DOM.budgetStatusText.style.color = 'var(--debit)';
   } else {
     DOM.budgetProgressBar.classList.remove('warning');
-    DOM.budgetStatusText.textContent = '👍 Spent amount is well within budget.';
+    DOM.budgetStatusText.textContent = '🎓 Campus budget is healthy! Nice job saving!';
     DOM.budgetStatusText.style.color = 'var(--text-muted)';
   }
 
@@ -340,7 +341,7 @@ function setTransactionType(type) {
     DOM.typeDebitBtn.classList.remove('active');
     
     // Autofill category values mapping to Credit defaults
-    DOM.categoryInput.value = 'salary';
+    DOM.categoryInput.value = 'pocket_money';
   } else {
     DOM.typeDebitBtn.classList.add('active');
     DOM.typeCreditBtn.classList.remove('active');
