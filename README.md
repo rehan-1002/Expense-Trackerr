@@ -1,6 +1,6 @@
-# 💸 AuraWealth — Smart Student Budget Companion
+# 💸 AuraWealth : Smart Student Budget Companion
 
-AuraWealth is a clean, simple, and beautiful expense tracker built primarily for students to manage pocket money, hostel rents, canteens, textbooks, and campus outings—while remaining flexible enough for anyone to use. It features a modern dark glassmorphic design, works natively in **Indian Rupees (₹)**, and scales beautifully between your phone and laptop.
+AuraWealth is a clean, simple, and beautiful expense tracker built primarily for students to manage pocket money, hostel rents, canteens, textbooks, and campus outings. While remaining flexible enough for anyone to use. It features a modern dark glassmorphic design, works natively in **Indian Rupees (₹)**, and scales beautifully between your phone and laptop.
 
 ---
 
