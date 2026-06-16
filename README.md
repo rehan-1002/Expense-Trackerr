@@ -1,43 +1,35 @@
-# 💸 AuraWealth — Smart Student Budget Companion
+# AuraWealth — Student Budget Companion
 
-AuraWealth is a clean, simple, and beautiful expense tracker built primarily for students to manage pocket money, hostel rents, canteens, textbooks, and campus outings—while remaining flexible enough for anyone to use. It features a modern dark glassmorphic design, works natively in **Indian Rupees (₹)**, and scales beautifully between your phone and laptop.
+AuraWealth is a clean, single-page expense tracker designed specifically for students to manage pocket money, hostel rent, canteen expenses, books, and campus outings. I built this to solve the common student struggle of tracking cash flows and setting budget limits without relying on complex, data-heavy apps.
 
----
+The interface is styled with a custom dark glassmorphic design and operates natively in Indian Rupees (₹).
 
-## ✨ What it does
+## Features
 
-- **Stunning Dark Mode**: A premium interface built with glassmorphic cards, smooth animations, and soft neon glows.
-- **Made for Rupees (₹)**: Formatted natively using the Indian currency system (grouping lakhs and crores) so campus expenses make sense.
-- **Student-First Categories**: Pre-loaded tags for Pocket Money, Internships, Scholarships, Canteens, Books/Stationery, Hostel Rent, Transit, Outings, and more.
-- **Easy Budget Tracking**: Set your monthly pocket money limit (defaults to ₹8,000). The progress bar will turn amber/red and warn you if you use up more than 85% of it.
-- **Campus Canteen Insights**: See a live visual breakdown of the categories you spend on most, so you know exactly where your allowance goes.
-- **Memo Notes & Search**: Write down details for any expense (e.g. "Semester Exam Prep Books") and search or filter them instantly.
-- **100% Private**: Your data is saved right in your browser's local storage. There are no sign-ups, no cloud databases, and your financial data never leaves your device.
-- **Export to CSV**: Download your entire transaction log with a single click to open in Excel or Google Sheets.
+- **Rupee-First Formatting:** Handles native Indian Rupee formatting (lakhs/crores) using the `Intl.NumberFormat` API.
+- **Student-Specific Categories:** Tag transactions for pocket money, internships, canteen food, hostel rent, books/stationery, outings, and transport.
+- **Active Budget Guard:** Set a monthly allowance or pocket money limit. The application warns you when you cross 85% of your budget and alerts you when you run out.
+- **Top Spend Analytics:** Displays a visual breakdown of your highest spending categories to identify where your money is going.
+- **Local & Private:** Everything is kept local. Your transaction logs and budget settings are saved directly in your browser's `localStorage` — no databases, no tracking.
+- **CSV Export:** Click to download your complete history as a `.csv` file to analyze in Excel or Google Sheets.
 
----
+## Technical Collaboration & Credits
 
-## 🛠️ Built With
+I designed and built AuraWealth with the help of **Antigravity**, a coding assistant by Google DeepMind. During the development process, Antigravity assisted as a pair programmer with:
+- Crafting the responsive glassmorphic UI layout and styling inside `style.css`.
+- Building and testing the state management, local storage synchronization, and transaction logic in `app.js`.
+- Refining the India-specific currency formatting, search filters, and automated CSV exporting.
 
-- **HTML** for the structure
-- **CSS** for the layout, dark theme, and mobile-friendly styling
-- **JavaScript** for calculations, local saving, and files exporting
-- **FontAwesome & Google Fonts** (Outfit) for the icons and typography
+## Project Structure
 
----
+- `index.html` - Core layout, transaction forms, panels, and modal UI
+- `style.css` - Custom styling, CSS custom properties, and responsive grid layouts
+- `app.js` - State logic, storage syncing, and dashboard metrics rendering
 
-## 🚀 How to Run Locally
-1. Clone the repository: `git clone https://github.com/rehan-1002/Expense-Trackerr.git`
-2. Open `index.html` in your browser (or use Live Server in VS Code).
+## Quick Start
 
----
-
-## 📂 Project Structure
-
-```text
-Expense Tracker/
-├── index.html   # Layout structure, panels, and forms
-├── style.css    # Responsive styles and theme colors
-├── app.js       # Calculations, storage, and logic
-└── README.md    # Product document
-```
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/rehan-1002/Expense-Trackerr.git
+   ```
+2. Open `index.html` in any web browser (or use VS Code Live Server).

@@ -1,13 +1,10 @@
-// AuraWealth Expense Tracker - Application Logic
-
-// --- Constants & State ---
 let state = {
   transactions: JSON.parse(localStorage.getItem('aura_transactions')) || [],
   budgetLimit: parseFloat(localStorage.getItem('aura_budget_limit')) || 8000.00,
-  currentType: 'credit', // Default transaction form type selector
+  currentType: 'credit', 
   filters: {
     search: '',
-    type: 'all' // 'all', 'credit', 'debit'
+    type: 'all' 
   }
 };
 
@@ -23,7 +20,6 @@ const CATEGORIES = {
   others: { label: 'Others / Misc', icon: 'fa-asterisk' }
 };
 
-// --- DOM Selectors ---
 const DOM = {
   currentDateDisplay: document.getElementById('currentDateDisplay'),
   netBalanceAmount: document.getElementById('netBalanceAmount'),
@@ -36,8 +32,7 @@ const DOM = {
   openBudgetModalBtn: document.getElementById('openBudgetModalBtn'),
   insightsContainer: document.getElementById('insightsContainer'),
   noInsightsText: document.getElementById('noInsightsText'),
-  
-  // Form elements
+
   transactionForm: document.getElementById('transactionForm'),
   typeCreditBtn: document.getElementById('typeCreditBtn'),
   typeDebitBtn: document.getElementById('typeDebitBtn'),
@@ -45,42 +40,36 @@ const DOM = {
   categoryInput: document.getElementById('categoryInput'),
   dateInput: document.getElementById('dateInput'),
   noteInput: document.getElementById('noteInput'),
-  
-  // Search & Filter & Action elements
+
   searchInput: document.getElementById('searchInput'),
   filterTabBtns: document.querySelectorAll('.filter-tab-btn'),
   exportCsvBtn: document.getElementById('exportCsvBtn'),
   transactionListContainer: document.getElementById('transactionListContainer'),
-  
-  // Budget Modal elements
+
   budgetModalOverlay: document.getElementById('budgetModalOverlay'),
   budgetConfigForm: document.getElementById('budgetConfigForm'),
   monthlyBudgetLimitInput: document.getElementById('monthlyBudgetLimitInput'),
   closeBudgetModalBtn: document.getElementById('closeBudgetModalBtn'),
-  
-  // Toast container
+
   toastContainer: document.getElementById('toastContainer')
 };
 
-// --- Toast System ---
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  
+
   const iconClass = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
   toast.innerHTML = `
     <i class="fa-solid ${iconClass}"></i>
     <span>${message}</span>
   `;
-  
+
   DOM.toastContainer.appendChild(toast);
-  
-  // Slide in
+
   setTimeout(() => {
     toast.classList.add('show');
   }, 50);
-  
-  // Slide out and remove
+
   setTimeout(() => {
     toast.classList.remove('show');
     setTimeout(() => {
@@ -89,7 +78,6 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// --- Formatting Utils ---
 function formatCurrency(value) {
   const formatter = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -106,30 +94,24 @@ function formatDate(dateString) {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    timeZone: 'UTC' // Keep date exact to input selector
+    timeZone: 'UTC' 
   });
 }
 
-// --- Date Header Setup ---
 function updateHeaderDate() {
   const now = new Date();
   const options = { month: 'long', year: 'numeric' };
   DOM.currentDateDisplay.textContent = now.toLocaleDateString('en-US', options);
-  
-  // Set default date picker to today
+
   const todayStr = now.toISOString().split('T')[0];
   DOM.dateInput.value = todayStr;
 }
 
-// --- LocalStorage Sync ---
 function saveToLocalStorage() {
   localStorage.setItem('aura_transactions', JSON.stringify(state.transactions));
   localStorage.setItem('aura_budget_limit', state.budgetLimit.toString());
 }
 
-// --- Core Computations & Renderers ---
-
-// Update Financial Calculations and cards
 function renderDashboardMetrics() {
   let income = 0;
   let expense = 0;
@@ -145,12 +127,10 @@ function renderDashboardMetrics() {
 
   const netBalance = income - expense;
 
-  // Render values
   DOM.netBalanceAmount.textContent = formatCurrency(netBalance);
   DOM.totalIncomeAmount.textContent = `+${formatCurrency(income)}`;
   DOM.totalExpenseAmount.textContent = `-${formatCurrency(expense)}`;
 
-  // Apply visual styling to Net Balance depending on positive/negative
   if (netBalance < 0) {
     DOM.netBalanceAmount.style.color = 'var(--debit)';
     DOM.netBalanceAmount.style.textShadow = '0 0 15px rgba(244, 63, 94, 0.25)';
@@ -162,21 +142,16 @@ function renderDashboardMetrics() {
     DOM.netBalanceAmount.style.textShadow = 'none';
   }
 
-  // Budget Calculations (Calculated dynamically for current month)
-  // For safety, we sum all expenses in the system. 
-  // In a future update, we can restrict to the active month.
   const currentBudgetSpent = expense; 
   const budgetPercentageValue = state.budgetLimit > 0 
-    ? Math.min(Math.round((currentBudgetSpent / state.budgetLimit) * 100), 200) // cap layout display at 200%
+    ? Math.min(Math.round((currentBudgetSpent / state.budgetLimit) * 100), 200) 
     : 0;
 
   DOM.budgetPercentage.textContent = `${budgetPercentageValue}%`;
   DOM.budgetSpentVsLimit.textContent = `${formatCurrency(currentBudgetSpent)} spent of ${formatCurrency(state.budgetLimit)}`;
-  
-  // Animating progress bar
+
   DOM.budgetProgressBar.style.width = `${Math.min(budgetPercentageValue, 100)}%`;
-  
-  // Set alert state for budget limit
+
   if (budgetPercentageValue >= 85) {
     DOM.budgetProgressBar.classList.add('warning');
     DOM.budgetStatusText.textContent = budgetPercentageValue >= 100 
@@ -192,13 +167,11 @@ function renderDashboardMetrics() {
   renderInsights(expense);
 }
 
-// Render Top Spending Analytics (Insights)
 function renderInsights(totalExpense) {
-  // Clear dynamic elements first (keeping fallback elements hidden as needed)
+
   const dynamicBars = DOM.insightsContainer.querySelectorAll('.category-bar-wrapper, .top-item-highlight');
   dynamicBars.forEach(bar => bar.remove());
 
-  // Aggregate spending by category
   const spendings = {};
   state.transactions.forEach(t => {
     if (t.type === 'debit') {
@@ -216,13 +189,11 @@ function renderInsights(totalExpense) {
 
   DOM.noInsightsText.style.display = 'none';
 
-  // Sort descending by total amount spent
   categoryEntries.sort((a, b) => b[1] - a[1]);
 
   const topCategory = categoryEntries[0];
   const maxSpend = topCategory[1];
 
-  // Render Top highlight header
   const highlightElement = document.createElement('div');
   highlightElement.className = 'top-item-highlight';
   const catMetadata = CATEGORIES[topCategory[0]] || { label: topCategory[0], icon: 'fa-asterisk' };
@@ -233,12 +204,10 @@ function renderInsights(totalExpense) {
   `;
   DOM.insightsContainer.appendChild(highlightElement);
 
-  // Render bars for each category up to top 3
   categoryEntries.slice(0, 3).forEach(([catKey, totalSpent]) => {
     const categoryInfo = CATEGORIES[catKey] || { label: catKey, icon: 'fa-asterisk' };
     const pct = totalExpense > 0 ? Math.round((totalSpent / totalExpense) * 100) : 0;
-    
-    // Width ratio relative to the max spend category for neat proportional comparison
+
     const widthRatio = maxSpend > 0 ? (totalSpent / maxSpend) * 100 : 0;
 
     const wrapper = document.createElement('div');
@@ -256,17 +225,15 @@ function renderInsights(totalExpense) {
   });
 }
 
-// Render filtered transactions list
 function renderTransactionList() {
   DOM.transactionListContainer.innerHTML = '';
 
-  // Filter items
   const filtered = state.transactions.filter(t => {
-    // Filter type tab
+
     if (state.filters.type !== 'all' && t.type !== state.filters.type) {
       return false;
     }
-    // Search query matches note or category label
+
     if (state.filters.search) {
       const q = state.filters.search.toLowerCase();
       const catLabel = (CATEGORIES[t.category]?.label || '').toLowerCase();
@@ -286,7 +253,6 @@ function renderTransactionList() {
     return;
   }
 
-  // Render cards
   filtered.forEach(t => {
     const catInfo = CATEGORIES[t.category] || { label: t.category, icon: 'fa-asterisk' };
     const isCredit = t.type === 'credit';
@@ -313,7 +279,6 @@ function renderTransactionList() {
       </button>
     `;
 
-    // Add delete action to this specific button
     card.querySelector('.transaction-delete-btn').addEventListener('click', (e) => {
       const idToDelete = e.currentTarget.getAttribute('data-id');
       deleteTransaction(idToDelete);
@@ -323,8 +288,6 @@ function renderTransactionList() {
   });
 }
 
-// --- Controller Actions ---
-
 function deleteTransaction(id) {
   state.transactions = state.transactions.filter(t => t.id !== id);
   saveToLocalStorage();
@@ -333,27 +296,21 @@ function deleteTransaction(id) {
   showToast('Transaction deleted successfully.', 'error');
 }
 
-// Switch between credit / debit input button styles
 function setTransactionType(type) {
   state.currentType = type;
   if (type === 'credit') {
     DOM.typeCreditBtn.classList.add('active');
     DOM.typeDebitBtn.classList.remove('active');
-    
-    // Autofill category values mapping to Credit defaults
+
     DOM.categoryInput.value = 'pocket_money';
   } else {
     DOM.typeDebitBtn.classList.add('active');
     DOM.typeCreditBtn.classList.remove('active');
-    
-    // Autofill category values mapping to Debit defaults
+
     DOM.categoryInput.value = 'food';
   }
 }
 
-// --- Action Event Bindings ---
-
-// Transaction Form Submit
 DOM.transactionForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -367,7 +324,6 @@ DOM.transactionForm.addEventListener('submit', (e) => {
     return;
   }
 
-  // Create transaction object
   const newTransaction = {
     id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
     type: state.currentType,
@@ -377,33 +333,27 @@ DOM.transactionForm.addEventListener('submit', (e) => {
     note
   };
 
-  // Prepend to active items
   state.transactions.unshift(newTransaction);
   saveToLocalStorage();
 
-  // Reset inputs
   DOM.amountInput.value = '';
   DOM.noteInput.value = '';
-  updateHeaderDate(); // resets date picker input to today
+  updateHeaderDate(); 
 
-  // Refresh UI
   renderDashboardMetrics();
   renderTransactionList();
 
   showToast(`Recorded ${state.currentType} transaction!`);
 });
 
-// Toggle type switch credit / debit click listeners
 DOM.typeCreditBtn.addEventListener('click', () => setTransactionType('credit'));
 DOM.typeDebitBtn.addEventListener('click', () => setTransactionType('debit'));
 
-// Search Text input keyup
 DOM.searchInput.addEventListener('input', (e) => {
   state.filters.search = e.target.value;
   renderTransactionList();
 });
 
-// Filter Tabs switches click
 DOM.filterTabBtns.forEach(btn => {
   btn.addEventListener('click', (e) => {
     DOM.filterTabBtns.forEach(b => b.classList.remove('active'));
@@ -413,7 +363,6 @@ DOM.filterTabBtns.forEach(btn => {
   });
 });
 
-// Budget Modal Config Open/Close
 DOM.openBudgetModalBtn.addEventListener('click', () => {
   DOM.monthlyBudgetLimitInput.value = state.budgetLimit;
   DOM.budgetModalOverlay.classList.add('active');
@@ -431,7 +380,6 @@ DOM.budgetModalOverlay.addEventListener('click', (e) => {
   }
 });
 
-// Budget form submission save
 DOM.budgetConfigForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const newLimit = parseFloat(DOM.monthlyBudgetLimitInput.value);
@@ -447,14 +395,12 @@ DOM.budgetConfigForm.addEventListener('submit', (e) => {
   showToast(`Monthly budget set to ${formatCurrency(newLimit)}`);
 });
 
-// Export Log data to CSV file format
 DOM.exportCsvBtn.addEventListener('click', () => {
   if (state.transactions.length === 0) {
     showToast('No transaction data to export.', 'error');
     return;
   }
 
-  // Build CSV content
   const headers = ['ID', 'Type', 'Amount (₹)', 'Category', 'Date', 'Note'];
   const rows = state.transactions.map(t => [
     t.id,
@@ -466,8 +412,7 @@ DOM.exportCsvBtn.addEventListener('click', () => {
   ]);
 
   const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  
-  // Download CSV via virtual anchor tag click
+
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -477,27 +422,22 @@ DOM.exportCsvBtn.addEventListener('click', () => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  
+
   showToast('CSV Exported successfully.');
 });
 
-// --- Bootstrapping Execution ---
 function init() {
   updateHeaderDate();
-  
-  // App starts fresh with no preloaded demo data
+
   if (state.transactions.length === 0) {
     state.transactions = [];
     saveToLocalStorage();
   }
 
-  // Pre-fill default form state category to match Received
   setTransactionType('credit');
 
-  // Load dashboards
   renderDashboardMetrics();
   renderTransactionList();
 }
 
-// Execute initial load
 init();

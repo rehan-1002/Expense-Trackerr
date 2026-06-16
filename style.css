@@ -1,38 +1,32 @@
-/* 
-  Expense Tracker - Premium Dark Glassmorphism Styling
-  Designed with HSL palettes, smooth transitions, micro-interactions, and responsiveness.
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Color System */
+
   --bg-gradient-start: #080b11;
   --bg-gradient-end: #121824;
   --panel-bg: rgba(18, 24, 38, 0.6);
   --panel-border: rgba(255, 255, 255, 0.07);
-  
+
   --primary: hsl(263, 85%, 65%);
   --primary-glow: rgba(139, 92, 246, 0.3);
   --primary-hover: hsl(263, 90%, 72%);
-  
+
   --credit: hsl(150, 84%, 57%);
   --credit-glow: rgba(52, 211, 153, 0.15);
   --credit-hover: hsl(150, 84%, 65%);
-  
+
   --debit: hsl(351, 89%, 60%);
   --debit-glow: rgba(244, 63, 94, 0.15);
   --debit-hover: hsl(351, 89%, 68%);
-  
+
   --text-main: #f3f4f6;
   --text-muted: #9ca3af;
   --text-dark: #6b7280;
-  
+
   --accent-blue: #3b82f6;
   --accent-yellow: #eab308;
   --accent-orange: #f97316;
-  
-  /* Layout tokens */
+
   --radius-lg: 18px;
   --radius-md: 12px;
   --radius-sm: 8px;
@@ -40,7 +34,6 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Base Settings */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -60,7 +53,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -78,7 +70,6 @@ body {
   background: var(--primary);
 }
 
-/* Background Ambient Lights */
 .ambient-glow-1 {
   position: absolute;
   top: -100px;
@@ -103,7 +94,6 @@ body {
   filter: blur(50px);
 }
 
-/* Main Container */
 .app-container {
   width: 100%;
   max-width: 1200px;
@@ -111,7 +101,6 @@ body {
   z-index: 1;
 }
 
-/* Header UI */
 header {
   display: flex;
   justify-content: space-between;
@@ -161,7 +150,6 @@ header {
   color: var(--primary);
 }
 
-/* Grid Layout for Cards */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -169,7 +157,6 @@ header {
   margin-bottom: 2rem;
 }
 
-/* Glass Card Component */
 .glass-card {
   background: var(--panel-bg);
   backdrop-filter: blur(16px);
@@ -199,7 +186,6 @@ header {
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Card Accent Borders */
 .card-balance::before {
   background: linear-gradient(90deg, var(--primary), var(--accent-blue));
 }
@@ -210,7 +196,6 @@ header {
   background: linear-gradient(90deg, var(--credit), var(--primary));
 }
 
-/* Balance Card Details */
 .card-title {
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -267,7 +252,6 @@ header {
   text-shadow: 0 0 10px rgba(244, 63, 94, 0.2);
 }
 
-/* Budget Gauge / Progress Bar */
 .budget-status-row {
   display: flex;
   justify-content: space-between;
@@ -332,7 +316,6 @@ header {
   text-decoration: underline;
 }
 
-/* Insights Card Content (Top Spending) */
 .insights-content {
   display: flex;
   flex-direction: column;
@@ -394,7 +377,6 @@ header {
   border: 1px solid rgba(244, 63, 94, 0.2);
 }
 
-/* Workspace Layout columns */
 .workspace-grid {
   display: grid;
   grid-template-columns: 1.2fr 1.8fr;
@@ -408,7 +390,6 @@ header {
   }
 }
 
-/* Form Controls & Inputs */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -460,7 +441,6 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
 }
 
-/* Custom Select Styling */
 select {
   appearance: none;
   cursor: pointer;
@@ -475,7 +455,6 @@ select {
   color: var(--text-muted);
 }
 
-/* Toggle Switch Credit / Debit */
 .transaction-type-toggle {
   display: flex;
   background: rgba(0, 0, 0, 0.2);
@@ -515,7 +494,6 @@ select {
   box-shadow: 0 4px 12px var(--debit-glow);
 }
 
-/* Form Action Buttons */
 .btn-primary {
   width: 100%;
   background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
@@ -545,7 +523,6 @@ select {
   transform: translateY(0);
 }
 
-/* History Feed Header with Search / Filters */
 .history-header {
   display: flex;
   flex-direction: column;
@@ -619,7 +596,6 @@ select {
   transform: translateY(-1px);
 }
 
-/* History List Layout */
 .transaction-list-container {
   max-height: 520px;
   overflow-y: auto;
@@ -766,7 +742,6 @@ select {
   background: rgba(244, 63, 94, 0.1);
 }
 
-/* Toast Notification Overlay */
 .toast-container {
   position: fixed;
   bottom: 2rem;
@@ -819,7 +794,6 @@ select {
   color: var(--debit);
 }
 
-/* Custom modal / input overlays for budget settings */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -889,7 +863,6 @@ select {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Developer Footer Styling */
 .developer-footer {
   margin-top: 4rem;
   margin-bottom: 2rem;
@@ -1022,14 +995,11 @@ select {
   }
 }
 
-/* --- Responsive Layout & Framing System --- */
-
-/* Medium Laptop / Large Tablet Breakpoint */
 @media (max-width: 1024px) {
   body {
     padding: 1.5rem 1rem;
   }
-  
+
   .dashboard-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.25rem;
@@ -1039,33 +1009,31 @@ select {
   .workspace-grid {
     gap: 1.25rem;
   }
-  
+
   .glass-card {
     padding: 1.25rem;
   }
-  
+
   .balance-amount {
     font-size: 2.2rem;
   }
 }
 
-/* Tablet Breakpoint */
 @media (max-width: 768px) {
   .workspace-grid {
     grid-template-columns: 1fr;
   }
-  
+
   header {
     padding: 1.25rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .brand-section h1 {
     font-size: 1.75rem;
   }
 }
 
-/* Mobile Phone Breakpoint */
 @media (max-width: 600px) {
   body {
     padding: 1rem 0.5rem;
@@ -1146,14 +1114,13 @@ select {
     padding: 1.15rem 1rem;
   }
 
-  /* List Card Fluid Alignment */
   .transaction-card {
     padding: 0.75rem 0.85rem;
     gap: 0.75rem;
   }
 
   .transaction-icon-box {
-    display: none; /* Hide icon box on mobile to maximize space */
+    display: none; 
   }
 
   .transaction-details h4 {
@@ -1176,7 +1143,6 @@ select {
     padding: 0.35rem;
   }
 
-  /* Form & Actions Flow */
   .action-row {
     flex-direction: column;
     align-items: stretch;
@@ -1203,12 +1169,10 @@ select {
     justify-content: center;
   }
 
-  /* Modal Adaptations */
   .modal {
     padding: 1.5rem 1.25rem;
   }
 
-  /* Bottom Notification Toasts standard spacing */
   .toast-container {
     bottom: 1rem;
     right: 1rem;
@@ -1220,7 +1184,6 @@ select {
     width: 100%;
   }
 
-  /* Mobile Footer Adjustments */
   .developer-footer {
     margin-top: 3rem;
     padding: 0 0.5rem;
@@ -1237,5 +1200,3 @@ select {
     font-size: 1.2rem;
   }
 }
-
-

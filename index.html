@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AuraWealth - Elegant Expense Tracker & Insights</title>
   <link rel="stylesheet" href="style.css">
-  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   
-  <!-- Ambient background glow spots -->
   <div class="ambient-glow-1"></div>
   <div class="ambient-glow-2"></div>
 
   <div class="app-container">
     
-    <!-- Header -->
     <header>
       <div class="brand-section">
         <h1><i class="fa-solid fa-feather-pointed"></i> AuraWealth</h1>
@@ -28,10 +25,8 @@
       </div>
     </header>
 
-    <!-- Top Dashboard Grid -->
     <section class="dashboard-grid">
       
-      <!-- Balance Card -->
       <div class="glass-card card-balance">
         <div class="card-title">
           <span>Net Balance</span>
@@ -50,7 +45,6 @@
         </div>
       </div>
 
-      <!-- Monthly Budget Tracking Card -->
       <div class="glass-card card-budget">
         <div class="card-title">
           <span>Monthly Budget</span>
@@ -69,7 +63,6 @@
         </div>
       </div>
 
-      <!-- Analytics/Insights Card -->
       <div class="glass-card card-insights">
         <div class="card-title">
           <span>Top Expenses</span>
@@ -79,16 +72,13 @@
           <div class="no-insights" id="noInsightsText">
             No expenses recorded yet to show analytics.
           </div>
-          <!-- Dynamically generated top spending bars go here -->
         </div>
       </div>
 
     </section>
 
-    <!-- Core Interactive Workspace -->
     <main class="workspace-grid">
       
-      <!-- Left: Create Transaction Form -->
       <section class="glass-card">
         <div class="card-title" style="margin-bottom: 1.5rem;">
           <span>New Transaction</span>
@@ -97,7 +87,6 @@
 
         <form id="transactionForm" autocomplete="off">
           
-          <!-- Credit/Debit Selector -->
           <div class="transaction-type-toggle">
             <button type="button" class="type-toggle-btn active credit" id="typeCreditBtn" data-type="credit">
               <i class="fa-solid fa-arrow-trend-up"></i> Received
@@ -107,7 +96,6 @@
             </button>
           </div>
 
-          <!-- Amount -->
           <div class="form-group">
             <label for="amountInput">Amount (₹)</label>
             <div class="input-wrapper">
@@ -116,14 +104,12 @@
             </div>
           </div>
 
-          <!-- Category -->
           <div class="form-group">
             <label for="categoryInput">Category</label>
             <div class="input-wrapper select-wrapper">
               <i class="fa-solid fa-shapes input-icon"></i>
               <select id="categoryInput" required>
                 <option value="" disabled selected>Select Category</option>
-                <!-- Filled dynamically, but default categories: -->
                 <option value="pocket_money">Pocket Money / Allowance</option>
                 <option value="part_time">Part-time / Internship</option>
                 <option value="scholarship">Scholarship / Grant</option>
@@ -137,7 +123,6 @@
             </div>
           </div>
 
-          <!-- Date -->
           <div class="form-group">
             <label for="dateInput">Date</label>
             <div class="input-wrapper">
@@ -146,13 +131,11 @@
             </div>
           </div>
 
-          <!-- Notes -->
           <div class="form-group">
             <label for="noteInput">Notes / Description</label>
             <textarea id="noteInput" placeholder="Add a memo or note... (e.g. Weekly grocery check)"></textarea>
           </div>
 
-          <!-- Submit Button -->
           <button type="submit" class="btn-primary">
             <i class="fa-solid fa-receipt"></i> Record Transaction
           </button>
@@ -160,7 +143,6 @@
         </form>
       </section>
 
-      <!-- Right: History Feed -->
       <section class="glass-card">
         <div class="history-header">
           
@@ -175,7 +157,6 @@
             </button>
           </div>
 
-          <!-- Action Filters/Search Grid -->
           <div class="action-row">
             
             <div class="input-wrapper search-box">
@@ -193,16 +174,13 @@
 
         </div>
 
-        <!-- Scrollable Transaction container -->
         <div class="transaction-list-container" id="transactionListContainer">
-          <!-- Transctions go here dynamically -->
         </div>
 
       </section>
 
     </main>
 
-    <!-- Developer Footer -->
     <footer class="developer-footer">
       <div class="footer-divider"></div>
       <div class="footer-content">
@@ -221,7 +199,6 @@
 
   </div>
 
-  <!-- Budget Config Modal Overlay -->
   <div class="modal-overlay" id="budgetModalOverlay">
     <div class="modal">
       <div class="modal-header">Adjust Monthly Budget</div>
@@ -241,10 +218,8 @@
     </div>
   </div>
 
-  <!-- Toasts overlay -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Main logic JS script -->
   <script src="app.js"></script>
 </body>
 </html>
